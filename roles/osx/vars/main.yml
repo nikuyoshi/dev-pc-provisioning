@@ -3,3 +3,14 @@
 homebrew_packages:
   - name: tree
     state: latest
+
+git_configurations:
+  - name: user.email
+    value: nikuyoshi@gmail.com
+    scope: global
+  - name: user.name
+    value: Hiroki Uchida
+    scope: global
+  - name: credential.helper
+    value: osxkeychain
+    scope: global

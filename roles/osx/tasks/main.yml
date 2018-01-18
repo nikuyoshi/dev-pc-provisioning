@@ -2,10 +2,14 @@
 # tasks file for mac
 - name: Update homebrew and install softwares
   homebrew:
-      name: "{{ item.name }}"
-      state: "{{ item.state }}"
-      update_homebrew: yes
-  with_items:
-    - "{{ homebrew_packages }}"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    update_homebrew: yes
+  with_items: "{{ homebrew_packages }}"
 
-
+- name: Configure git_config
+  git_config:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    scope: "{{ item.scope }}"
+  with_items: "{{ git_configurations }}"
