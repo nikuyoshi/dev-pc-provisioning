@@ -1,0 +1,7 @@
+- name: Setup my personal environment
+  hosts: localhost
+  sudo: no
+  connection: local
+  roles:
+    - role: osx
+

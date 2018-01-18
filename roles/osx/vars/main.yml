@@ -1,0 +1,5 @@
+---
+# vars file for mac
+homebrew_packages:
+  - name: tree
+    state: latest
