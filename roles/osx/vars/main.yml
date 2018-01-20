@@ -3,6 +3,10 @@
 homebrew_packages:
   - name: tree
     state: latest
+  - name: git-lfs
+    state: latest
+  - name: gradle
+    state: latest
 
 git_configurations:
   - name: user.email
