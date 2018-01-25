@@ -13,3 +13,12 @@
     value: "{{ item.value }}"
     scope: "{{ item.scope }}"
   with_items: "{{ git_configurations }}"
+
+- name: Configure osx_defaults
+  osx_defaults:
+    domain: "{{ item.domain }}"
+    key: "{{ item.key }}"
+    type: "{{ item.type }}"
+    value: "{{ item.value }}"
+    state: "{{ item.state }}"
+  with_items: "{{ osx_defaults_configurations }}"

@@ -7,6 +7,8 @@ homebrew_packages:
     state: latest
   - name: gradle
     state: latest
+  - name: python3
+    state: latest
 
 git_configurations:
   - name: user.email
@@ -18,3 +20,10 @@ git_configurations:
   - name: credential.helper
     value: osxkeychain
     scope: global
+
+osx_defaults_configurations:
+  - domain: com.apple.desktopservices
+    key: DSDontWriteNetworkStores
+    type: boolean
+    value: true
+    state: present
