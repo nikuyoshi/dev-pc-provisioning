@@ -22,3 +22,9 @@
     value: "{{ item.value }}"
     state: "{{ item.state }}"
   with_items: "{{ osx_defaults_configurations }}"
+
+- name: Create directory for local development
+  file:
+    path: "{{ item.path }}"
+    state: "{{ item.state }}"
+  with_items: "{{ dev_directories }}"

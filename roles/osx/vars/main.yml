@@ -27,3 +27,11 @@ osx_defaults_configurations:
     type: boolean
     value: true
     state: present
+
+dev_directories:
+  - name: Create read only git repo directory
+    path: ~/dev/readonly
+    state: directory
+  - name: Create workspace directory
+    path: ~/dev/workspace
+    state: directory
