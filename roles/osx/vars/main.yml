@@ -9,6 +9,10 @@ homebrew_packages:
     state: latest
   - name: python3
     state: latest
+  - name: jq
+    state: latest
+  - name: wget
+    state: latest
 
 git_configurations:
   - name: user.email
