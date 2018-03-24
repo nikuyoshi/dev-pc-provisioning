@@ -13,6 +13,8 @@ homebrew_packages:
     state: latest
   - name: wget
     state: latest
+  - name: node
+    state: latest
 
 git_configurations:
   - name: user.email
@@ -39,3 +41,8 @@ dev_directories:
   - name: Create workspace directory
     path: ~/dev/workspace
     state: directory
+
+nodejs_npm:
+  - name: prh
+    global: yes
+    state: present

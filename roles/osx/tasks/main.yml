@@ -23,6 +23,13 @@
     state: "{{ item.state }}"
   with_items: "{{ osx_defaults_configurations }}"
 
+- name: Configure npm
+  npm:
+    name: "{{ item.name }}"
+    global: "{{ item.global }}"
+    state: "{{ item.state }}"
+  with_items: "{{ nodejs_npm }}"
+
 - name: Create directory for local development
   file:
     path: "{{ item.path }}"
