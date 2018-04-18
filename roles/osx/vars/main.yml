@@ -16,6 +16,10 @@ homebrew_packages:
   - name: node
     state: latest
 
+homebrew_cask_packages:
+  - name: ngrok
+    state: present
+
 git_configurations:
   - name: user.email
     value: nikuyoshi@gmail.com

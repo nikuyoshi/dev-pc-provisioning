@@ -7,6 +7,13 @@
     update_homebrew: yes
   with_items: "{{ homebrew_packages }}"
 
+- name: Install homebrew cask softwares
+  homebrew_cask:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    update_homebrew: yes
+  with_items: "{{ homebrew_cask_packages }}"
+
 - name: Configure git_config
   git_config:
     name: "{{ item.name }}"
