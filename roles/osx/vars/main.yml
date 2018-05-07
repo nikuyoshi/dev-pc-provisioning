@@ -17,6 +17,8 @@ homebrew_packages:
     state: latest
   - name: mercurial
     state: latest
+  - name: postgresql
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
