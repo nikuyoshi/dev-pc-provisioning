@@ -19,6 +19,8 @@ homebrew_packages:
     state: latest
   - name: postgresql
     state: latest
+  - name: tig
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
