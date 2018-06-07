@@ -21,20 +21,22 @@ homebrew_packages:
     state: latest
   - name: tig
     state: latest
+  - name: yarn
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
     state: present
 
 git_configurations:
-  - name: user.email
-    value: nikuyoshi@gmail.com
-    scope: global
   - name: user.name
     value: Hiroki Uchida
     scope: global
   - name: credential.helper
     value: osxkeychain
+    scope: global
+  - name: merge.tool
+    value: vimdiff
     scope: global
 
 osx_defaults_configurations:
