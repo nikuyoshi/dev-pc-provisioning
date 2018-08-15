@@ -23,6 +23,8 @@ homebrew_packages:
     state: latest
   - name: yarn
     state: latest
+  - name: hugo
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
