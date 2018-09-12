@@ -27,6 +27,8 @@ homebrew_packages:
     state: latest
   - name: terraform
     state: latest
+  - name: bat
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
