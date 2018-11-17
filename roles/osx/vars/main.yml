@@ -31,6 +31,8 @@ homebrew_packages:
     state: latest
   - name: colordiff
     state: latest
+  - name: maven
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
