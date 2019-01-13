@@ -33,6 +33,10 @@ homebrew_packages:
     state: latest
   - name: maven
     state: latest
+  - name: nkf
+    state: latest
+  - name: pipenv
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
