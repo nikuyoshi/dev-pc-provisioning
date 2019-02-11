@@ -1,18 +1,24 @@
 ---
 # tasks file for mac
-- name: Update homebrew and install softwares
-  homebrew:
-    name: "{{ item.name }}"
-    state: "{{ item.state }}"
-    update_homebrew: yes
-  with_items: "{{ homebrew_packages }}"
-
 - name: Install homebrew cask softwares
   homebrew_cask:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     update_homebrew: yes
   with_items: "{{ homebrew_cask_packages }}"
+
+- name: Install homebrew tap softwares
+  homebrew_tap:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ homebrew_tap_packages }}"
+
+- name: Update homebrew and install softwares
+  homebrew:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    update_homebrew: yes
+  with_items: "{{ homebrew_packages }}"
 
 - name: Configure git_config
   git_config:

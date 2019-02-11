@@ -37,9 +37,15 @@ homebrew_packages:
     state: latest
   - name: pipenv
     state: latest
+  - name: aws-sam-cli
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
+    state: present
+
+homebrew_tap_packages:
+  - name: aws/tap
     state: present
 
 git_configurations:
