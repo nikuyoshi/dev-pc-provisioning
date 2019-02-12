@@ -39,6 +39,8 @@ homebrew_packages:
     state: latest
   - name: aws-sam-cli
     state: latest
+  - name: peco
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
