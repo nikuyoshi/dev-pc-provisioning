@@ -41,6 +41,8 @@ homebrew_packages:
     state: latest
   - name: peco
     state: latest
+  - name: go
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
