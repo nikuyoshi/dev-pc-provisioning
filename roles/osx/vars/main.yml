@@ -43,6 +43,8 @@ homebrew_packages:
     state: latest
   - name: go
     state: latest
+  - name: fish
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
