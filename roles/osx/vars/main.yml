@@ -45,6 +45,8 @@ homebrew_packages:
     state: latest
   - name: fish
     state: latest
+  - name: awscli
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
