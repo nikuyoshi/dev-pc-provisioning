@@ -36,7 +36,7 @@ homebrew_packages:
   - name: nkf
     state: latest
   - name: pipenv
-    state: latest
+    state: absent
   - name: aws-sam-cli
     state: latest
   - name: peco
@@ -46,6 +46,8 @@ homebrew_packages:
   - name: fish
     state: latest
   - name: awscli
+    state: latest
+  - name: iperf
     state: latest
 
 homebrew_cask_packages:
