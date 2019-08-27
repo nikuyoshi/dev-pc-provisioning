@@ -49,6 +49,10 @@ homebrew_packages:
     state: latest
   - name: iperf
     state: latest
+  - name: git
+    state: latest
+  - name: macvim
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
