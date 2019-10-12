@@ -55,6 +55,8 @@ homebrew_packages:
     state: latest
   - name: ipython
     state: latest
+  - name: jupyter
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
