@@ -57,6 +57,8 @@ homebrew_packages:
     state: latest
   - name: jupyter
     state: latest
+  - name: git-secrets
+    state: latest
 
 homebrew_cask_packages:
   - name: ngrok
