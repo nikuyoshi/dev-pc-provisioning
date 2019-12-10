@@ -94,7 +94,12 @@ dev_directories:
     path: ~/dev/workspace
     state: directory
 
+
 nodejs_npm:
   - name: prh
     global: yes
     state: present
+
+dotfile_repo:
+  repo: https://github.com/nikuyoshi/dotfiles.git
+  dest: ~/dev/workspace/dotfiles

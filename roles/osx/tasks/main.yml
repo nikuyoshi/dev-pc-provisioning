@@ -1,5 +1,33 @@
 ---
 # tasks file for mac
+
+- name: Check the git directory status
+  stat:
+    path: "{{ dotfile_repo.dest }}"
+  register: dotfile_repo_directory
+    
+- name: Clone dotfiles repository
+  git:
+    repo: "{{ dotfile_repo.repo }}"
+    dest: "{{ dotfile_repo.dest }}"
+    clone: yes
+  when:
+    - not dotfile_repo_directory.stat.exists
+
+- name: Update dotfiles repository
+  git:
+    repo: "{{ dotfile_repo.repo }}"
+    dest: "{{ dotfile_repo.dest }}"
+    clone: no
+    track_submodules: yes
+    update: yes
+  when:
+    - dotfile_repo_directory.stat.exists
+
+- name: Setup dotfile settings
+  shell:
+    cmd: cd ~/dev/workspace/dotfiles/; sh setup.sh
+
 - name: Install homebrew cask softwares
   homebrew_cask:
     name: "{{ item.name }}"
@@ -48,3 +76,4 @@
     path: "{{ item.path }}"
     state: "{{ item.state }}"
   with_items: "{{ dev_directories }}"
+
