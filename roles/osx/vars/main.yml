@@ -101,5 +101,5 @@ nodejs_npm:
     state: present
 
 dotfile_repo:
-  repo: https://github.com/nikuyoshi/dotfiles.git
+  repo: git@github.com:nikuyoshi/dotfiles.git
   dest: ~/dev/workspace/dotfiles
