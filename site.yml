@@ -1,2 +1,2 @@
 ---
-- import_playbook: mac.yml
+- import_playbook: ubuntu.yml
