@@ -6,6 +6,27 @@
     path: "{{ dotfile_repo.dest }}"
   register: dotfile_repo_directory
     
+- name: Update apt and install softwares
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    update_cache: yes
+  with_items: "{{ apt_packages }}"
+  become: yes
+
+- name: Configure git_config
+  git_config:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    scope: "{{ item.scope }}"
+  with_items: "{{ git_configurations }}"
+
+- name: Create directory for local development
+  file:
+    path: "{{ item.path }}"
+    state: "{{ item.state }}"
+  with_items: "{{ dev_directories }}"
+
 - name: Clone dotfiles repository
   git:
     repo: "{{ dotfile_repo.repo }}"
@@ -27,24 +48,3 @@
 - name: Setup dotfile settings
   shell:
     cmd: cd ~/dev/workspace/dotfiles/; bash setup.sh
-
-- name: Update apt and install softwares
-  apt:
-    name: "{{ item.name }}"
-    state: "{{ item.state }}"
-    update_cache: yes
-  with_items: "{{ apt_packages }}"
-  become: yes
-
-- name: Configure git_config
-  git_config:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    scope: "{{ item.scope }}"
-  with_items: "{{ git_configurations }}"
-
-- name: Create directory for local development
-  file:
-    path: "{{ item.path }}"
-    state: "{{ item.state }}"
-  with_items: "{{ dev_directories }}"
