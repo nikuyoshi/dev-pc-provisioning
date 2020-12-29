@@ -33,7 +33,6 @@
     clone: yes
   when:
     - not dotfile_repo_directory.stat.exists
-  become: true
 
 - name: Update dotfiles repository
   git:
