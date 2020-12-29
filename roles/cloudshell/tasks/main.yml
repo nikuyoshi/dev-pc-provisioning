@@ -63,10 +63,14 @@
   shell:
     cmd: bash ~/dev/workspace/dotfiles/setup.sh
 
-- name: Install oh-my-fish
+- name: Download oh-my-fish
+  get_url:
+      url: https://get.oh-my.fish
+      dest: ~/oh-my-fish-installer.sh
+
+- name: Install oh-my-fish      
   shell: 
-    cmd: curl -L https://get.oh-my.fish
-    executable: /usr/bin/fish
+    cmd: /usr/bin/fish ~/oh-my-fish-installer.sh
 
 - name: Install fish theme
   shell: 
