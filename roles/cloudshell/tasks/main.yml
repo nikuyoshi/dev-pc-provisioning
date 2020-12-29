@@ -10,7 +10,7 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     update_cache: yes
-  with_items: "{{ apt_packages }}"
+  with_items: "{{ yum_packages }}"
   become: true
 
 - name: Configure git_config
