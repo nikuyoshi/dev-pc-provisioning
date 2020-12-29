@@ -1,0 +1,6 @@
+- name: Setup my personal environment
+  hosts: localhost
+  become: no
+  connection: local
+  roles:
+    - role: cloudshell
