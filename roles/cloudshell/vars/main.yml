@@ -1,2 +1,5 @@
 ---
 # vars file for cloudshell
+dotfile_repo:
+  repo: git@github.com:nikuyoshi/dotfiles.git
+  dest: ~/dev/workspace/dotfiles
