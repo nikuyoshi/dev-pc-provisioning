@@ -65,7 +65,8 @@
 
 - name: Install oh-my-fish
   shell: 
-    cmd: curl -L https://get.oh-my.fish | fish
+    cmd: curl -L https://get.oh-my.fish
+    executable: /usr/bin/fish
 
 - name: Install fish theme
   shell: 
@@ -78,10 +79,6 @@
     executable: /usr/bin/fish
 
 - name: Modify shell with script
-  lineinfile:
+  copy:
     dest={{ ansible_env.HOME }}/.bashrc
-    line="/usr/bin/fish"
-    insertbefore=BOF state=present
-
-- name: Change Shell
-  shell: source ~/.bashrc
+    content="/usr/bin/fish"
