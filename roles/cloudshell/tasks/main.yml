@@ -1,0 +1,6 @@
+---
+# tasks file for cloudshell
+- name: Check the git directory status
+  stat:
+    path: "{{ dotfile_repo.dest }}"
+  register: dotfile_repo_directory
