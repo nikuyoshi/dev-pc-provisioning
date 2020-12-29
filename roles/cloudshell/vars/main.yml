@@ -9,6 +9,11 @@ yum_packages:
     state: latest
   - name: tig
     state: latest
+  - name: hostname
+    state: latest
+  - name: peco
+    state: latest
+
 
 git_configurations:
   - name: user.name
