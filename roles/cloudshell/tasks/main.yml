@@ -13,10 +13,10 @@
   with_items: "{{ yum_packages }}"
   become: true
 
-  - name: Get latest peco version
+- name: Get latest peco version
   shell: >
-    curl -sI https://github.com/peco/peco/releases/latest | awk -F'/' '/^Location:/{print $NF}'
-      register: peco_latest_version
+    curl -sI https://github.com/peco/peco/releases/latest | awk -F'/' '/^location:/{print $NF}'
+  register: peco_latest_version
 
 - name: Download latest peco
   get_url: url=https://github.com/peco/peco/releases/download/{{ peco_latest_version.stdout }}/peco_linux_amd64.tar.gz dest=/tmp/peco_linux_amd64.tar.gz
@@ -26,6 +26,12 @@
 
 - name: Copy to /usr/bin/
   copy: src=/tmp/peco_linux_amd64/peco dest=/usr/bin/ mode=0755
+  become: true
+
+- name: Install peco plugin
+  shell: 
+    cmd: omf install peco
+    executable: /usr/bin/fish
 
 - name: Configure git_config
   git_config:
