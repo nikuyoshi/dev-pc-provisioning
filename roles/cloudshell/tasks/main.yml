@@ -11,7 +11,7 @@
 #     state: "{{ item.state }}"
 #     update_cache: yes
 #   with_items: "{{ apt_packages }}"
-#   become: yes
+#   become: true
 
 - name: Configure git_config
   git_config:
@@ -33,6 +33,7 @@
     clone: yes
   when:
     - not dotfile_repo_directory.stat.exists
+  become: true
 
 - name: Update dotfiles repository
   git:
