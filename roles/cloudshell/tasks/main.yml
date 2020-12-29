@@ -28,11 +28,6 @@
   copy: src=/tmp/peco_linux_amd64/peco dest=/usr/bin/ mode=0755
   become: true
 
-- name: Install peco plugin
-  shell: 
-    cmd: omf install peco
-    executable: /usr/bin/fish
-
 - name: Configure git_config
   git_config:
     name: "{{ item.name }}"
@@ -66,7 +61,21 @@
 
 - name: Setup dotfile settings
   shell:
-    cmd: cd ~/dev/workspace/dotfiles/; bash setup.sh
+    cmd: bash ~/dev/workspace/dotfiles/setup.sh
+
+- name: Install oh-my-fish
+  shell: 
+    cmd: curl -L https://get.oh-my.fish | fish
+
+- name: Install fish theme
+  shell: 
+    cmd: omf install robbyrussell
+    executable: /usr/bin/fish
+
+- name: Install peco plugin
+  shell: 
+    cmd: omf install peco
+    executable: /usr/bin/fish
 
 - name: Modify shell with script
   lineinfile:
