@@ -67,11 +67,11 @@
   get_url:
     url: https://get.oh-my.fish
     dest: ~/oh-my-fish-installer.sh
-    uid: 0755
+    mode: 0755
 
 - name: Install oh-my-fish      
   shell: 
-    cmd: fish -y ~/oh-my-fish-installer.sh
+    cmd: fish ~/oh-my-fish-installer.sh -y
   args:
     executable: /usr/bin/fish
 
