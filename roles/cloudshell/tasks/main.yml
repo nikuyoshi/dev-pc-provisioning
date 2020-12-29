@@ -67,3 +67,12 @@
 - name: Setup dotfile settings
   shell:
     cmd: cd ~/dev/workspace/dotfiles/; bash setup.sh
+
+- name: Modify shell with script
+  lineinfile:
+    dest={{ ansible_env.HOME }}/.bashrc
+    line="/usr/bin/fish"
+    insertbefore=BOF state=present
+
+- name: Change Shell
+  shell: source ~/.bashrc
