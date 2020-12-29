@@ -3,3 +3,83 @@
 dotfile_repo:
   repo: git@github.com:nikuyoshi/dotfiles.git
   dest: ~/dev/workspace/dotfiles
+
+#apt_packages:
+#  - name: tree
+#    state: latest
+#  - name: git-lfs
+#    state: latest
+#  - name: gradle
+#    state: latest
+#  - name: python3
+#    state: latest
+#  - name: jq
+#    state: latest
+#  - name: wget
+#    state: latest
+#  - name: nodejs
+#    state: latest
+#  - name: mercurial
+#    state: latest
+#  - name: postgresql
+#    state: latest
+#  - name: tig
+#    state: latest
+#  - name: yarn
+#    state: latest
+#  - name: hugo
+#    state: latest
+#  - name: bat
+#    state: latest
+#  - name: colordiff
+#    state: latest
+#  - name: maven
+#    state: latest
+#  - name: nkf
+#    state: latest
+#  - name: pipenv
+#    state: absent
+#  - name: peco
+#    state: latest
+#  - name: fish
+#    state: latest
+#  - name: awscli
+#    state: latest
+#  - name: iperf
+#    state: latest
+#  - name: git
+#    state: latest
+#  - name: jupyter
+#    state: latest
+#  - name: git-secrets
+#    state: latest
+#  - name: keychain
+#    state: latest
+
+git_configurations:
+  - name: user.name
+    value: Hiroki Uchida
+    scope: global
+  - name: merge.tool
+    value: vimdiff
+    scope: global
+  - name: core.editor
+    value: vim
+    scope: global
+
+dev_directories:
+  - name: Create read only git repo directory
+    path: ~/dev/readonly
+    state: directory
+  - name: Create workspace directory
+    path: ~/dev/workspace
+    state: directory
+
+nodejs_npm:
+  - name: prh
+    global: yes
+    state: present
+
+dotfile_repo:
+  repo: git@github.com:nikuyoshi/dotfiles.git
+  dest: ~/dev/workspace/dotfiles
