@@ -5,7 +5,7 @@
     path: "{{ dotfile_repo.dest }}"
   register: dotfile_repo_directory
 
-- name: Update apt and install softwares
+- name: Update yum and install softwares
   yum:
     name: "{{ item.name }}"
     state: "{{ item.state }}"

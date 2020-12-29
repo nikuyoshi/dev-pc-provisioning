@@ -9,8 +9,6 @@ yum_packages:
     state: latest
   - name: tig
     state: latest
-  - name: git-secrets
-    state: latest
 
 git_configurations:
   - name: user.name
