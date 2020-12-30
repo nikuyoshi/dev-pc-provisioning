@@ -41,28 +41,6 @@
     state: "{{ item.state }}"
   with_items: "{{ dev_directories }}"
 
-- name: Clone dotfiles repository
-  git:
-    repo: "{{ dotfile_repo.repo }}"
-    dest: "{{ dotfile_repo.dest }}"
-    clone: yes
-  when:
-    - not dotfile_repo_directory.stat.exists
-
-- name: Update dotfiles repository
-  git:
-    repo: "{{ dotfile_repo.repo }}"
-    dest: "{{ dotfile_repo.dest }}"
-    clone: no
-    track_submodules: yes
-    update: yes
-  when:
-    - dotfile_repo_directory.stat.exists
-
-- name: Setup dotfile settings
-  shell:
-    cmd: bash ~/dev/workspace/dotfiles/setup.sh
-
 - name: Download oh-my-fish
   get_url:
     url: https://get.oh-my.fish
@@ -86,6 +64,28 @@
     cmd: omf install peco
   args:
     executable: /usr/bin/fish
+
+- name: Clone dotfiles repository
+  git:
+    repo: "{{ dotfile_repo.repo }}"
+    dest: "{{ dotfile_repo.dest }}"
+    clone: yes
+  when:
+    - not dotfile_repo_directory.stat.exists
+
+- name: Update dotfiles repository
+  git:
+    repo: "{{ dotfile_repo.repo }}"
+    dest: "{{ dotfile_repo.dest }}"
+    clone: no
+    track_submodules: yes
+    update: yes
+  when:
+    - dotfile_repo_directory.stat.exists
+
+- name: Setup dotfile settings
+  shell:
+    cmd: bash ~/dev/workspace/dotfiles/setup.sh
 
 - name: Modify shell with script
   copy:
