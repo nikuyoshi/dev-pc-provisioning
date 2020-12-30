@@ -71,7 +71,7 @@
 
 - name: Install oh-my-fish      
   shell: 
-    cmd: fish ~/oh-my-fish-installer.sh -y
+    cmd: ~/oh-my-fish-installer.sh -y --noninteractive
   args:
     executable: /usr/bin/fish
 
