@@ -5,8 +5,8 @@ dotfile_repo:
   dest: ~/dev/workspace/dotfiles
 
 yum_packages:
-  - name: fish
-    state: latest
+  - name: https://download.opensuse.org/repositories/shells:/fish:/release:/3/CentOS_8/x86_64/fish-3.1.2-1.11.x86_64.rpm
+    state: present
   - name: tig
     state: latest
   - name: hostname
