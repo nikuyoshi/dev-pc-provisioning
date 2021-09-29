@@ -1,6 +1,5 @@
 ---
 # tasks file for mac
-
 - name: Check the git directory status
   stat:
     path: "{{ dotfile_repo.dest }}"
@@ -13,6 +12,23 @@
     update_cache: yes
   with_items: "{{ apt_packages }}"
   become: true
+
+# https://github.com/gsamokovarov/jump
+- name: Download Jump
+  get_url: 
+    url: https://github.com/gsamokovarov/jump/releases/download/v0.40.0/jump_0.40.0_amd64.deb 
+    dest: /tmp/jump_0.40.0_amd64.deb
+    mode: '0755'
+    username: uchiroki
+
+- name: Install Jump
+  shell: sudo dpkg -i /tmp/jump_0.40.0_amd64.deb
+
+- name: Delete Jump install package
+  file: 
+    state: absent
+    path: /tmp/jump_0.40.0_amd64.deb
+
 
 - name: Configure git_config
   git_config:
