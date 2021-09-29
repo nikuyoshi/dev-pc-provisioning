@@ -41,6 +41,30 @@
     state: "{{ item.state }}"
   with_items: "{{ dev_directories }}"
 
+- name: Download oh-my-fish
+  get_url:
+    url: https://get.oh-my.fish
+    dest: ~/oh-my-fish-installer.sh
+    mode: 0755
+
+- name: Install oh-my-fish      
+  shell: 
+    cmd: ~/oh-my-fish-installer.sh -y --noninteractive
+  args:
+    executable: /usr/bin/fish
+
+- name: Install fish theme
+  shell: 
+    cmd: omf install robbyrussell
+  args:
+    executable: /usr/bin/fish
+
+- name: Install peco plugin
+  shell: 
+    cmd: omf install peco
+  args:
+    executable: /usr/bin/fish
+
 - name: Clone dotfiles repository
   git:
     repo: "{{ dotfile_repo.repo }}"
@@ -62,30 +86,6 @@
 - name: Setup dotfile settings
   shell:
     cmd: bash ~/dev/workspace/dotfiles/setup.sh
-
-- name: Download oh-my-fish
-  get_url:
-    url: https://get.oh-my.fish
-    dest: ~/oh-my-fish-installer.sh
-    mode: 0755
-
-- name: Install oh-my-fish      
-  shell: 
-    cmd: fish ~/oh-my-fish-installer.sh -y
-  args:
-    executable: /usr/bin/fish
-
-- name: Install fish theme
-  shell: 
-    cmd: omf install robbyrussell
-  args:
-    executable: /usr/bin/fish
-
-- name: Install peco plugin
-  shell: 
-    cmd: omf install peco
-  args:
-    executable: /usr/bin/fish
 
 - name: Modify shell with script
   copy:
