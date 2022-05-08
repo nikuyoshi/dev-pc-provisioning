@@ -1,5 +1,5 @@
 ---
-# tasks file for mac
+# tasks file for ubuntu
 - name: Check the git directory status
   stat:
     path: "{{ dotfile_repo.dest }}"
@@ -19,7 +19,6 @@
     url: https://github.com/gsamokovarov/jump/releases/download/v0.40.0/jump_0.40.0_amd64.deb 
     dest: /tmp/jump_0.40.0_amd64.deb
     mode: '0755'
-    username: uchiroki
 
 - name: Install Jump
   shell: sudo dpkg -i /tmp/jump_0.40.0_amd64.deb
@@ -28,7 +27,6 @@
   file: 
     state: absent
     path: /tmp/jump_0.40.0_amd64.deb
-
 
 - name: Configure git_config
   git_config:
@@ -42,6 +40,16 @@
     path: "{{ item.path }}"
     state: "{{ item.state }}"
   with_items: "{{ dev_directories }}"
+
+- name: Check the oh-my-zsh directory status
+  stat:
+    path: "{{ oh_my_zsh.dest }}"
+  register: oh_my_zsh_directory
+
+- name: Install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when:
+    - not oh_my_zsh_directory.stat.exists
 
 - name: Clone dotfiles repository
   git:
@@ -64,3 +72,51 @@
 - name: Setup dotfile settings
   shell:
     cmd: cd ~/dev/workspace/dotfiles/; bash setup.sh
+
+- name: Check the oh-my-zsh directory status
+  stat:
+    path: "{{ oh_my_zsh.dest }}"
+  register: oh_my_zsh_directory
+
+- name: Install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when:
+    - not oh_my_zsh_directory.stat.exists
+
+# https://starship.rs/
+- name: Download Starship
+  get_url: 
+    url: https://starship.rs/install.sh
+    dest: /tmp/starship-install.sh
+    mode: '0755'
+
+- name: Install Starship
+  shell: sh /tmp/starship-install.sh -y
+
+- name: Delete Starship install script
+  file: 
+    state: absent
+    path: /tmp/starship-install.sh
+
+- name: Check the oh-my-zsh directory status
+  stat:
+    path: "{{ oh_my_zsh.dest }}"
+  register: oh_my_zsh_directory
+
+- name: Install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when:
+    - not oh_my_zsh_directory.stat.exists
+
+- name: Check zsh-peco-history directory status
+  stat:
+    path: "{{ zsh_peco_history.dest }}"
+  register: zsh_peco_history_directory
+
+- name: Clone zsh-peco-history repository
+  git:
+    repo: "{{ zsh_peco_history.repo }}"
+    dest: "{{ zsh_peco_history.dest }}"
+    clone: yes
+  when:
+    - not zsh_peco_history_directory.stat.exists

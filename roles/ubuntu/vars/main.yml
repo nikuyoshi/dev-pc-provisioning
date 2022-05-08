@@ -5,8 +5,6 @@ apt_packages:
     state: latest
   - name: git-lfs
     state: latest
-  - name: gradle
-    state: latest
   - name: python3
     state: latest
   - name: jq
@@ -15,27 +13,23 @@ apt_packages:
     state: latest
   - name: nodejs
     state: latest
-  - name: mercurial
-    state: latest
-  - name: postgresql
-    state: latest
   - name: tig
     state: latest
-  - name: yarn
-    state: latest
   - name: hugo
+    state: latest
+  - name: terraform
     state: latest
   - name: bat
     state: latest
   - name: colordiff
-    state: latest
-  - name: maven
     state: latest
   - name: nkf
     state: latest
   - name: pipenv
     state: absent
   - name: peco
+    state: latest
+  - name: go
     state: latest
   - name: fish
     state: latest
@@ -44,6 +38,8 @@ apt_packages:
   - name: iperf
     state: latest
   - name: git
+    state: latest
+  - name: ipython
     state: latest
   - name: jupyter
     state: latest
@@ -79,3 +75,10 @@ nodejs_npm:
 dotfile_repo:
   repo: git@github.com:nikuyoshi/dotfiles.git
   dest: ~/dev/workspace/dotfiles
+
+oh_my_zsh:
+  dest: ~/.oh-my-zsh
+
+zsh_peco_history:
+  repo: git@github.com:jimeh/zsh-peco-history.git
+  dest: ~/.zsh/zsh-peco-history
