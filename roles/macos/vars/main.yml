@@ -5,8 +5,6 @@ homebrew_packages:
     state: latest
   - name: git-lfs
     state: latest
-  - name: gradle
-    state: latest
   - name: python3
     state: latest
   - name: jq
@@ -15,13 +13,7 @@ homebrew_packages:
     state: latest
   - name: node
     state: latest
-  - name: mercurial
-    state: latest
-  - name: postgresql
-    state: latest
   - name: tig
-    state: latest
-  - name: yarn
     state: latest
   - name: hugo
     state: latest
@@ -31,14 +23,10 @@ homebrew_packages:
     state: latest
   - name: colordiff
     state: latest
-  - name: maven
-    state: latest
   - name: nkf
     state: latest
   - name: pipenv
     state: absent
-  - name: aws-sam-cli
-    state: latest
   - name: peco
     state: latest
   - name: go
@@ -59,10 +47,8 @@ homebrew_packages:
     state: latest
   - name: git-secrets
     state: latest
-
-homebrew_cask_packages:
-  - name: ngrok
-    state: present
+  - name: jump
+    state: latest
 
 homebrew_tap_packages:
   - name: aws/tap
@@ -94,7 +80,6 @@ dev_directories:
     path: ~/dev/workspace
     state: directory
 
-
 nodejs_npm:
   - name: prh
     global: yes
@@ -103,3 +88,10 @@ nodejs_npm:
 dotfile_repo:
   repo: git@github.com:nikuyoshi/dotfiles.git
   dest: ~/dev/workspace/dotfiles
+
+oh_my_zsh:
+  dest: ~/.oh-my-zsh
+
+zsh_peco_history:
+  repo: git@github.com:jimeh/zsh-peco-history.git
+  dest: ~/.zsh/zsh-peco-history

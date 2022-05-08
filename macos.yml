@@ -1,6 +1,6 @@
 - name: Setup my personal environment
   hosts: localhost
-  sudo: no
+  become: no
   connection: local
   roles:
-    - role: osx
+    - role: macos
