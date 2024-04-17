@@ -17,8 +17,6 @@ apt_packages:
     state: latest
   - name: hugo
     state: latest
-  - name: terraform
-    state: latest
   - name: bat
     state: latest
   - name: colordiff
@@ -29,8 +27,6 @@ apt_packages:
     state: absent
   - name: peco
     state: latest
-  - name: go
-    state: latest
   - name: fish
     state: latest
   - name: awscli
@@ -38,8 +34,6 @@ apt_packages:
   - name: iperf
     state: latest
   - name: git
-    state: latest
-  - name: ipython
     state: latest
   - name: jupyter
     state: latest
@@ -75,9 +69,6 @@ nodejs_npm:
 dotfile_repo:
   repo: git@github.com:nikuyoshi/dotfiles.git
   dest: ~/dev/workspace/dotfiles
-
-oh_my_zsh:
-  dest: ~/.oh-my-zsh
 
 zsh_peco_history:
   repo: git@github.com:jimeh/zsh-peco-history.git

@@ -41,16 +41,6 @@
     state: "{{ item.state }}"
   with_items: "{{ dev_directories }}"
 
-- name: Check the oh-my-zsh directory status
-  stat:
-    path: "{{ oh_my_zsh.dest }}"
-  register: oh_my_zsh_directory
-
-- name: Install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when:
-    - not oh_my_zsh_directory.stat.exists
-
 - name: Clone dotfiles repository
   git:
     repo: "{{ dotfile_repo.repo }}"
@@ -73,16 +63,6 @@
   shell:
     cmd: cd ~/dev/workspace/dotfiles/; bash setup.sh
 
-- name: Check the oh-my-zsh directory status
-  stat:
-    path: "{{ oh_my_zsh.dest }}"
-  register: oh_my_zsh_directory
-
-- name: Install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when:
-    - not oh_my_zsh_directory.stat.exists
-
 # https://starship.rs/
 - name: Download Starship
   get_url: 
@@ -97,26 +77,3 @@
   file: 
     state: absent
     path: /tmp/starship-install.sh
-
-- name: Check the oh-my-zsh directory status
-  stat:
-    path: "{{ oh_my_zsh.dest }}"
-  register: oh_my_zsh_directory
-
-- name: Install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when:
-    - not oh_my_zsh_directory.stat.exists
-
-- name: Check zsh-peco-history directory status
-  stat:
-    path: "{{ zsh_peco_history.dest }}"
-  register: zsh_peco_history_directory
-
-- name: Clone zsh-peco-history repository
-  git:
-    repo: "{{ zsh_peco_history.repo }}"
-    dest: "{{ zsh_peco_history.dest }}"
-    clone: yes
-  when:
-    - not zsh_peco_history_directory.stat.exists
