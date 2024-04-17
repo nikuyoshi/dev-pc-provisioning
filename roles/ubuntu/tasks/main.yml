@@ -13,20 +13,9 @@
   with_items: "{{ apt_packages }}"
   become: true
 
-# https://github.com/gsamokovarov/jump
-- name: Download Jump
-  get_url: 
-    url: https://github.com/gsamokovarov/jump/releases/download/v0.40.0/jump_0.40.0_amd64.deb 
-    dest: /tmp/jump_0.40.0_amd64.deb
-    mode: '0755'
-
 - name: Install Jump
-  shell: sudo dpkg -i /tmp/jump_0.40.0_amd64.deb
-
-- name: Delete Jump install package
-  file: 
-    state: absent
-    path: /tmp/jump_0.40.0_amd64.deb
+  snap: 
+    name: jump
 
 - name: Configure git_config
   git_config:
@@ -77,3 +66,9 @@
   file: 
     state: absent
     path: /tmp/starship-install.sh
+
+- name: Change default shell
+  become: yes
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/fish
