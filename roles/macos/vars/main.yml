@@ -41,8 +41,6 @@ homebrew_packages:
     state: latest
   - name: macvim
     state: latest
-  - name: ipython
-    state: latest
   - name: jupyter
     state: latest
   - name: git-secrets
