@@ -1,6 +1,5 @@
 ---
-# tasks file for mac
-
+# tasks file for mac  
 - name: Check the git directory status
   stat:
     path: "{{ dotfile_repo.dest }}"
@@ -106,7 +105,7 @@
   with_items: "{{ homebrew_tap_packages }}"
 
 - name: Update homebrew and install softwares
-  homebrew:
+  community.general.homebrew:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     update_homebrew: yes
@@ -127,3 +126,14 @@
     global: "{{ item.global }}"
     state: "{{ item.state }}"
   with_items: "{{ nodejs_npm }}"
+
+- name: Ensure /opt/homebrew/bin/fish is listed in /etc/shells
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/shells
+    line: /opt/homebrew/bin/fish
+    state: present
+
+- name: Change default shell to fish using chsh
+  become: true
+  ansible.builtin.command: chsh -s /opt/homebrew/bin/fish {{ ansible_user_id }}

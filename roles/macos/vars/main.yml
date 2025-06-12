@@ -7,8 +7,6 @@ homebrew_packages:
     state: latest
   - name: python3
     state: latest
-  - name: jq
-    state: latest
   - name: wget
     state: latest
   - name: node
@@ -44,6 +42,10 @@ homebrew_packages:
   - name: git-secrets
     state: latest
   - name: jump
+    state: latest
+  - name: jq
+    state: latest
+  - name: fzf
     state: latest
 
 homebrew_tap_packages:
