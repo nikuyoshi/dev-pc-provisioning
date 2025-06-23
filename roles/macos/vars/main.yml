@@ -47,6 +47,8 @@ homebrew_packages:
     state: latest
   - name: fzf
     state: latest
+  - name: gh
+    state: latest
 
 homebrew_tap_packages:
   - name: aws/tap
