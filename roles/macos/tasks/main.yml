@@ -1,5 +1,22 @@
 ---
 # tasks file for mac  
+- name: Check if Homebrew is installed
+  command: which brew
+  register: brew_check
+  failed_when: false
+  changed_when: false
+
+- name: Fail with clear message if Homebrew not found
+  fail:
+    msg: |
+      Homebrew is not installed. Please install it first:
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      
+      After installation, you may need to add Homebrew to your PATH:
+      - Apple Silicon: echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+      - Intel: echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+  when: brew_check.rc != 0
+
 - name: Check the git directory status
   stat:
     path: "{{ dotfile_repo.dest }}"
