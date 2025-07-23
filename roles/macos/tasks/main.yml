@@ -111,6 +111,12 @@
     update_homebrew: yes
   with_items: "{{ homebrew_packages }}"
 
+- name: Install homebrew cask softwares
+  community.general.homebrew_cask:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ homebrew_cask_packages }}"
+
 - name: Configure osx_defaults
   osx_defaults:
     domain: "{{ item.domain }}"

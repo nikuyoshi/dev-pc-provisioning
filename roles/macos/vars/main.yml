@@ -50,6 +50,10 @@ homebrew_packages:
   - name: gh
     state: latest
 
+homebrew_cask_packages:
+  - name: 1password-cli
+    state: latest
+
 homebrew_tap_packages:
   - name: aws/tap
     state: present

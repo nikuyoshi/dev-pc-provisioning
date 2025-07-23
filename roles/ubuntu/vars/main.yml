@@ -29,6 +29,8 @@ apt_packages:
     state: latest
   - name: fish
     state: latest
+  - name: 1password-cli
+    state: latest
   - name: awscli
     state: latest
   - name: iperf

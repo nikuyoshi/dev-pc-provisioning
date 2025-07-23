@@ -5,6 +5,20 @@
     path: "{{ dotfile_repo.dest }}"
   register: dotfile_repo_directory
     
+- name: Add 1Password GPG key
+  ansible.builtin.apt_key:
+    url: https://downloads.1password.com/linux/keys/1password.asc
+    keyring: /usr/share/keyrings/1password-archive-keyring.gpg
+    state: present
+  become: true
+
+- name: Add 1Password repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main"
+    filename: 1password
+    state: present
+  become: true
+
 - name: Update apt and install softwares
   apt:
     name: "{{ item.name }}"
