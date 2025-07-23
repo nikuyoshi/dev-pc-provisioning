@@ -1,3 +1,13 @@
-#SPDX-License-Identifier: MIT-0
 ---
 # defaults file for common
+dev_directories:
+  - name: Create read only git repo directory
+    path: ~/dev/readonly
+    state: directory
+  - name: Create workspace directory
+    path: ~/dev/workspace
+    state: directory
+
+dotfile_repo:
+  repo: git@github.com:nikuyoshi/dotfiles.git
+  dest: ~/dev/workspace/dotfiles

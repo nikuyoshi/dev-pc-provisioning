@@ -80,22 +80,10 @@ osx_defaults_configurations:
     value: true
     state: present
 
-dev_directories:
-  - name: Create read only git repo directory
-    path: ~/dev/readonly
-    state: directory
-  - name: Create workspace directory
-    path: ~/dev/workspace
-    state: directory
-
 nodejs_npm:
   - name: prh
     global: yes
     state: present
-
-dotfile_repo:
-  repo: git@github.com:nikuyoshi/dotfiles.git
-  dest: ~/dev/workspace/dotfiles
 
 oh_my_zsh:
   dest: ~/.oh-my-zsh

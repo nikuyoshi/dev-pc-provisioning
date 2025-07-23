@@ -62,22 +62,10 @@ git_configurations:
     value: vim
     scope: global
 
-dev_directories:
-  - name: Create read only git repo directory
-    path: ~/dev/readonly
-    state: directory
-  - name: Create workspace directory
-    path: ~/dev/workspace
-    state: directory
-
 nodejs_npm:
   - name: prh
     global: yes
     state: present
-
-dotfile_repo:
-  repo: git@github.com:nikuyoshi/dotfiles.git
-  dest: ~/dev/workspace/dotfiles
 
 zsh_peco_history:
   repo: git@github.com:jimeh/zsh-peco-history.git

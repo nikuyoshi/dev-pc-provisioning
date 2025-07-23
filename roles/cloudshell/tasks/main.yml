@@ -1,10 +1,5 @@
 ---
 # tasks file for cloudshell
-- name: Check the git directory status
-  stat:
-    path: "{{ dotfile_repo.dest }}"
-  register: dotfile_repo_directory
-
 - name: Update yum and install softwares
   yum:
     name: "{{ item.name }}"
@@ -28,18 +23,6 @@
   copy: src=/tmp/peco_linux_amd64/peco dest=/usr/bin/ mode=0755
   become: true
 
-- name: Configure git_config
-  git_config:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    scope: "{{ item.scope }}"
-  with_items: "{{ git_configurations }}"
-
-- name: Create directory for local development
-  file:
-    path: "{{ item.path }}"
-    state: "{{ item.state }}"
-  with_items: "{{ dev_directories }}"
 
 - name: Download oh-my-fish
   get_url:
@@ -65,27 +48,6 @@
   args:
     executable: /usr/bin/fish
 
-- name: Clone dotfiles repository
-  git:
-    repo: "{{ dotfile_repo.repo }}"
-    dest: "{{ dotfile_repo.dest }}"
-    clone: yes
-  when:
-    - not dotfile_repo_directory.stat.exists
-
-- name: Update dotfiles repository
-  git:
-    repo: "{{ dotfile_repo.repo }}"
-    dest: "{{ dotfile_repo.dest }}"
-    clone: no
-    track_submodules: yes
-    update: yes
-  when:
-    - dotfile_repo_directory.stat.exists
-
-- name: Setup dotfile settings
-  shell:
-    cmd: bash ~/dev/workspace/dotfiles/setup.sh
 
 - name: Modify shell with script
   copy:

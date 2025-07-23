@@ -65,3 +65,62 @@
     state: absent
   when: clear_email_cache | default(false) | bool
   tags: clear-cache
+
+- name: Common development environment setup
+  block:
+    - name: Create directory for local development
+      file:
+        path: "{{ item.path }}"
+        state: "{{ item.state }}"
+      with_items: "{{ dev_directories }}"
+
+    - name: Check the git directory status
+      stat:
+        path: "{{ dotfile_repo.dest }}"
+      register: dotfile_repo_directory
+
+    - name: Configure git_config
+      git_config:
+        name: "{{ item.name }}"
+        value: "{{ item.value }}"
+        scope: "{{ item.scope }}"
+      with_items: "{{ git_configurations }}"
+
+    - name: Clone dotfiles repository
+      git:
+        repo: "{{ dotfile_repo.repo }}"
+        dest: "{{ dotfile_repo.dest }}"
+        clone: yes
+      when:
+        - not dotfile_repo_directory.stat.exists
+
+    - name: Update dotfiles repository
+      git:
+        repo: "{{ dotfile_repo.repo }}"
+        dest: "{{ dotfile_repo.dest }}"
+        clone: no
+        track_submodules: yes
+        update: yes
+      when:
+        - dotfile_repo_directory.stat.exists
+
+    - name: Setup dotfile settings
+      shell:
+        cmd: cd {{ dotfile_repo.dest }} && bash setup.sh
+
+    - name: Install Starship
+      block:
+        - name: Download Starship
+          get_url: 
+            url: https://starship.rs/install.sh
+            dest: "/tmp/starship-install-{{ ansible_date_time.epoch }}.sh"
+            mode: '0755'
+          register: starship_installer
+          
+        - name: Install Starship
+          shell: sh {{ starship_installer.dest }} -y
+          
+        - name: Delete Starship install script
+          file: 
+            state: absent
+            path: "{{ starship_installer.dest }}"
