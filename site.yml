@@ -11,6 +11,10 @@
         msg: "Detected platform: {{ ansible_facts['system'] }} ({{ ansible_facts['os_family'] }})"
   
   tasks:
+    - name: Include common role
+      include_role:
+        name: common
+
     - name: Include macOS role
       include_role:
         name: macos

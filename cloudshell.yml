@@ -3,4 +3,5 @@
   become: no
   connection: local
   roles:
+    - role: common
     - role: cloudshell

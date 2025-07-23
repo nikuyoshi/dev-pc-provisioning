@@ -1,0 +1,67 @@
+---
+# tasks file for common
+- name: Manage Git email configuration
+  block:
+    - name: Check for existing Git email config
+      command: git config --global user.email
+      register: existing_email
+      failed_when: false
+      changed_when: false
+
+    - name: Use existing Git config if available
+      set_fact:
+        git_user_email: "{{ existing_email.stdout }}"
+      when: existing_email.rc == 0 and existing_email.stdout != ""
+
+    - name: Check for cached email file
+      stat:
+        path: "{{ ansible_env.HOME }}/.config/ansible/git_email"
+      register: cache_file
+      when: git_user_email is not defined
+
+    - name: Read cached email
+      slurp:
+        src: "{{ ansible_env.HOME }}/.config/ansible/git_email"
+      register: cached_data
+      when: 
+        - git_user_email is not defined
+        - cache_file.stat.exists
+
+    - name: Set email from cache
+      set_fact:
+        git_user_email: "{{ cached_data.content | b64decode | trim }}"
+      when:
+        - git_user_email is not defined
+        - cache_file.stat.exists
+
+    - name: Prompt for email if needed
+      pause:
+        prompt: "Enter your Git email address"
+      register: email_input
+      when: git_user_email is not defined
+
+    - name: Set email from prompt
+      set_fact:
+        git_user_email: "{{ email_input.user_input }}"
+      when: email_input.user_input is defined
+
+    - name: Create cache directory
+      file:
+        path: "{{ ansible_env.HOME }}/.config/ansible"
+        state: directory
+        mode: '0700'
+      when: email_input.user_input is defined
+
+    - name: Save email to cache
+      copy:
+        content: "{{ git_user_email }}"
+        dest: "{{ ansible_env.HOME }}/.config/ansible/git_email"
+        mode: '0600'
+      when: email_input.user_input is defined
+
+- name: Clear email cache if requested
+  file:
+    path: "{{ ansible_env.HOME }}/.config/ansible/git_email"
+    state: absent
+  when: clear_email_cache | default(false) | bool
+  tags: clear-cache

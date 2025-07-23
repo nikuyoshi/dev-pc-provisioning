@@ -12,6 +12,9 @@ git_configurations:
   - name: user.name
     value: Hiroki Uchida
     scope: global
+  - name: user.email
+    value: "{{ git_user_email }}"
+    scope: global
   - name: merge.tool
     value: vimdiff
     scope: global
