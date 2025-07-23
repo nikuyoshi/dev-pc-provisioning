@@ -61,12 +61,3 @@ git_configurations:
   - name: core.editor
     value: vim
     scope: global
-
-nodejs_npm:
-  - name: prh
-    global: yes
-    state: present
-
-zsh_peco_history:
-  repo: git@github.com:jimeh/zsh-peco-history.git
-  dest: ~/.zsh/zsh-peco-history
