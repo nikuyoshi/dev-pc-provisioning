@@ -49,7 +49,14 @@
     executable: /usr/bin/fish
 
 
-- name: Modify shell with script
-  copy:
-    dest={{ ansible_env.HOME }}/.bashrc
-    content="/usr/bin/fish"
+- name: Add Fish shell to .bashrc
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    block: |
+      # Launch Fish shell if available
+      if [ -x /usr/bin/fish ] && [ -z "$FISH_LAUNCHED" ]; then
+        export FISH_LAUNCHED=1
+        exec /usr/bin/fish
+      fi
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - Fish shell"
+    insertafter: EOF
