@@ -105,8 +105,30 @@
         - dotfile_repo_directory.stat.exists
 
     - name: Setup dotfile settings
-      shell:
-        cmd: cd {{ dotfile_repo.dest }} && bash setup.sh
+      block:
+        - name: Check if setup.sh exists
+          stat:
+            path: "{{ dotfile_repo.dest }}/setup.sh"
+          register: setup_script
+
+        - name: Run dotfiles setup script
+          shell:
+            cmd: bash setup.sh
+            chdir: "{{ dotfile_repo.dest }}"
+          register: setup_result
+          when: setup_script.stat.exists
+          failed_when: setup_result.rc != 0
+          changed_when: setup_result.rc == 0
+
+        - name: Display setup script output
+          debug:
+            var: setup_result.stdout_lines
+          when: setup_script.stat.exists and setup_result.stdout_lines is defined
+
+        - name: Warn if setup.sh not found
+          debug:
+            msg: "Warning: setup.sh not found in {{ dotfile_repo.dest }}"
+          when: not setup_script.stat.exists
 
     - name: Install Starship
       block:
