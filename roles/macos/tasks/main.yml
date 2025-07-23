@@ -50,16 +50,6 @@
   shell:
     cmd: cd ~/dev/workspace/dotfiles/; sh setup.sh
 
-- name: Check the oh-my-zsh directory status
-  stat:
-    path: "{{ oh_my_zsh.dest }}"
-  register: oh_my_zsh_directory
-
-- name: Install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when:
-    - not oh_my_zsh_directory.stat.exists
-
 # https://starship.rs/
 - name: Download Starship
   get_url: 
@@ -74,16 +64,6 @@
   file: 
     state: absent
     path: /tmp/starship-install.sh
-
-- name: Check the oh-my-zsh directory status
-  stat:
-    path: "{{ oh_my_zsh.dest }}"
-  register: oh_my_zsh_directory
-
-- name: Install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  when:
-    - not oh_my_zsh_directory.stat.exists
 
 - name: Check zsh-peco-history directory status
   stat:
