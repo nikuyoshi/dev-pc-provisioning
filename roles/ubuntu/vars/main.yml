@@ -48,16 +48,4 @@ apt_packages:
   - name: terraform
     state: latest
 
-git_configurations:
-  - name: user.name
-    value: Hiroki Uchida
-    scope: global
-  - name: user.email
-    value: "{{ git_user_email }}"
-    scope: global
-  - name: merge.tool
-    value: vimdiff
-    scope: global
-  - name: core.editor
-    value: vim
-    scope: global
+git_configurations: "{{ git_configurations_base }}"

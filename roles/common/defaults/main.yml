@@ -1,5 +1,11 @@
 ---
 # defaults file for common
+
+# User information
+git_user_name: "Hiroki Uchida"
+github_username: "nikuyoshi"
+
+# Development directories
 dev_directories:
   - name: Create read only git repo directory
     path: ~/dev/readonly
@@ -8,6 +14,22 @@ dev_directories:
     path: ~/dev/workspace
     state: directory
 
+# Dotfiles repository
 dotfile_repo:
-  repo: git@github.com:nikuyoshi/dotfiles.git
+  repo: "git@github.com:{{ github_username }}/dotfiles.git"
   dest: ~/dev/workspace/dotfiles
+
+# Git configurations (base)
+git_configurations_base:
+  - name: user.name
+    value: "{{ git_user_name }}"
+    scope: global
+  - name: user.email
+    value: "{{ git_user_email }}"
+    scope: global
+  - name: merge.tool
+    value: vimdiff
+    scope: global
+  - name: core.editor
+    value: vim
+    scope: global

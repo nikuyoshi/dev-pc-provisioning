@@ -8,21 +8,9 @@ yum_packages:
   - name: hostname
     state: latest
 
-git_configurations:
-  - name: user.name
-    value: Hiroki Uchida
-    scope: global
-  - name: user.email
-    value: "{{ git_user_email }}"
-    scope: global
-  - name: merge.tool
-    value: vimdiff
-    scope: global
-  - name: core.editor
-    value: vim
-    scope: global
+git_configurations: "{{ git_configurations_base }}"
 
 # Cloud Shell uses HTTPS URL instead of SSH
 dotfile_repo:
-  repo: https://github.com/nikuyoshi/dotfiles.git
+  repo: "https://github.com/{{ github_username }}/dotfiles.git"
   dest: ~/dev/workspace/dotfiles

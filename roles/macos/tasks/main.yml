@@ -85,6 +85,8 @@
     line: /opt/homebrew/bin/fish
     state: present
 
-- name: Change default shell to fish using chsh
+- name: Change default shell to fish
   become: true
-  ansible.builtin.command: chsh -s /opt/homebrew/bin/fish {{ ansible_user_id }}
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /opt/homebrew/bin/fish
