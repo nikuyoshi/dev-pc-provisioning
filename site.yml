@@ -1,2 +1,31 @@
 ---
-- import_playbook: ubuntu.yml
+# Main site playbook - automatically detects and provisions macOS or Ubuntu
+- name: Auto-detect platform and provision
+  hosts: localhost
+  connection: local
+  become: no
+  gather_facts: yes
+  pre_tasks:
+    - name: Display detected platform
+      debug:
+        msg: "Detected platform: {{ ansible_facts['system'] }} ({{ ansible_facts['os_family'] }})"
+  
+  tasks:
+    - name: Include macOS role
+      include_role:
+        name: macos
+      when: ansible_facts['os_family'] == "Darwin"
+    
+    - name: Include Ubuntu role
+      include_role:
+        name: ubuntu
+      when: 
+        - ansible_facts['os_family'] == "Debian"
+        - ansible_facts['distribution'] == "Ubuntu"
+    
+    - name: Fail if unsupported platform
+      fail:
+        msg: "Unsupported platform: {{ ansible_facts['system'] }}. For Cloud Shell, please run cloudshell.yml directly."
+      when:
+        - ansible_facts['os_family'] != "Darwin"
+        - not (ansible_facts['os_family'] == "Debian" and ansible_facts['distribution'] == "Ubuntu")
