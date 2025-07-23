@@ -27,8 +27,6 @@ homebrew_packages:
     state: absent
   - name: peco
     state: latest
-  - name: go
-    state: latest
   - name: fish
     state: latest
   - name: awscli
