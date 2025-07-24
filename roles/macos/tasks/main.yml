@@ -78,15 +78,30 @@
     state: "{{ item.state }}"
   with_items: "{{ nodejs_npm }}"
 
+- name: Check if fish is already in /etc/shells
+  command: grep -q "^/opt/homebrew/bin/fish$" /etc/shells
+  register: fish_in_shells
+  failed_when: false
+  changed_when: false
+
 - name: Ensure /opt/homebrew/bin/fish is listed in /etc/shells
   become: true
   ansible.builtin.lineinfile:
     path: /etc/shells
     line: /opt/homebrew/bin/fish
     state: present
+    create: false
+  when: fish_in_shells.rc != 0
+
+- name: Get current user shell
+  command: dscl . -read /Users/{{ ansible_user_id }} UserShell
+  register: current_shell
+  changed_when: false
+  failed_when: false
 
 - name: Change default shell to fish
   become: true
   user:
     name: "{{ ansible_user_id }}"
     shell: /opt/homebrew/bin/fish
+  when: '"/opt/homebrew/bin/fish" not in current_shell.stdout'
