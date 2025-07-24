@@ -8,16 +8,15 @@
 
 ## 重要な注意事項
 
-このリポジトリは個人用（Hiroki Uchida）の開発環境セットアップ用です。Git設定やdotfilesリポジトリURLなどの個人設定は意図的にハードコードされています。
+このリポジトリは個人用（Hiroki Uchida）の開発環境セットアップ用です。個人設定は`roles/common/defaults/main.yml`で変数化されており、簡単にカスタマイズ可能です。
 
 ### 既知の問題
-- **macOSロール**: oh-my-zshのインストールタスクが3回重複しています（roles/macos/tasks/main.yml）
-- **site.yml**: ubuntu.ymlのみをインポート（macOSユーザーは直接macos.ymlを実行する必要があります）
-- **macOSテスト**: test.ymlが`mac`ロールを参照していますが、実際のロール名は`macos`です
+- **Cloud Shell dotfiles**: HTTPS URLの重複定義（varsで適切にオーバーライド済み）
 
 ## 前提条件
 
-- **macOS/Ubuntu**: GitのSSH鍵設定が必要（dotfilesクローン用）
+- **macOS**: Homebrewのインストールが必要（未インストールの場合は手順が表示されます）
+- **Git SSH鍵**: SSHでdotfilesをクローンする場合のみ必要（デフォルト）
 - **すべてのプラットフォーム**: sudo権限が必要
 
 ## コマンド
@@ -25,13 +24,12 @@
 ### Playbookの実行
 
 ```bash
-# macOS用（site.ymlは使用しないこと）
-ansible-playbook macos.yml --ask-become-pass
-
-# Ubuntu用
-ansible-playbook ubuntu.yml --ask-become-pass
-# または
+# macOS/Ubuntu用（自動検出）
 ansible-playbook site.yml --ask-become-pass
+
+# プラットフォーム別の直接実行も可能
+ansible-playbook macos.yml --ask-become-pass
+ansible-playbook ubuntu.yml --ask-become-pass
 
 # Cloud Shell用
 ansible-playbook cloudshell.yml --ask-become-pass
@@ -46,8 +44,8 @@ ansible-playbook <playbook>.yml -vvv --ask-become-pass
 ### ロールのテスト
 
 ```bash
-# macOSロールのテスト（注意：現在動作しません - ロール名の不一致）
-# ansible-playbook roles/macos/tests/test.yml
+# macOSロールのテスト
+ansible-playbook roles/macos/tests/test.yml
 
 # Ubuntuロールのテスト
 ansible-playbook roles/ubuntu/tests/test.yml
@@ -72,47 +70,53 @@ ansible-playbook --syntax-check <playbook>.yml
 ```
 .
 ├── roles/
+│   ├── common/        # 共通タスクと設定
 │   ├── cloudshell/    # Cloud Shell環境セットアップ
 │   ├── macos/         # macOS環境セットアップ
 │   └── ubuntu/        # Ubuntu環境セットアップ
 ├── *.yml              # プラットフォーム別のplaybook
-└── site.yml           # メインエントリーポイント（ubuntu.ymlのみインポート）
+└── site.yml           # メインエントリーポイント（プラットフォーム自動検出）
 ```
 
 各ロールの内容:
 - `tasks/main.yml`: 主要な自動化ロジック
 - `vars/main.yml`: プラットフォーム固有のパッケージリストと設定
 - `tests/test.yml`: ロールテスト用playbook（macos/ubuntuのみ）
-- `defaults/`, `handlers/`, `meta/`: 現在は未使用
+- `defaults/main.yml`: デフォルト変数（commonロールで活用）
+- `handlers/`, `meta/`: 現在は未使用
 
 ## 主要なプロビジョニングタスク
 
-すべてのロールが実行する主要機能:
-1. **Git設定**: ユーザー認証情報と設定の構成
+共通ロール（common）が実行する機能:
+1. **Git email設定**: 初回実行時にプロンプトで入力、以降はキャッシュ
 2. **開発ディレクトリ**: `~/dev/workspace`と`~/dev/readonly`の作成
-3. **パッケージインストール**: プラットフォーム固有のパッケージマネージャーによる開発ツールのインストール
-4. **シェル環境**: Fishシェルの設定とフレームワークのインストール
-5. **Dotfiles管理**: 個人用dotfilesリポジトリのクローンと管理
-6. **プロンプトのカスタマイズ**: Starshipプロンプトのインストール
+3. **Git基本設定**: user.name、user.email、エディタなどの設定
+4. **Dotfiles管理**: dotfilesリポジトリのクローン、更新、setup.shの実行
+5. **Starshipプロンプト**: 全プラットフォームでのインストール
+
+各プラットフォームロールが実行する機能:
+1. **パッケージインストール**: プラットフォーム固有のツール
+2. **シェル環境**: Fishシェルとプラットフォーム別の設定
+3. **プラットフォーム固有の設定**: macOSデフォルト、権限設定など
 
 ## プラットフォーム別の詳細
 
 ### macOS
-- **パッケージマネージャー**: Homebrew（自動インストール）
+- **パッケージマネージャー**: Homebrew（要事前インストール、チェック機能あり）
 - **シェル設定**: oh-my-zsh → Fish（/opt/homebrew/bin/fish - Apple Silicon前提）
-- **特有の設定**: macOSシステムデフォルト、MacVimインストール
-- **注意点**: oh-my-zshタスクの重複、Intel Macでのパス問題の可能性
+- **特有の設定**: macOSシステムデフォルト、MacVimインストール、credential.helper設定
+- **注意点**: Intel Macでは/usr/local/bin/fishパスの調整が必要な場合あり
 
 ### Ubuntu
 - **パッケージマネージャー**: APT、Snap（jumpツール用）
 - **シェル設定**: 直接Fishに切り替え（oh-my-fish未使用）
-- **特有の設定**: 開発ツールの豊富なセット
+- **特有の設定**: 開発ツールの豊富なセット、Terraformインストール（HashiCorp公式リポジトリ）、1Password CLI
 
 ### Cloud Shell
 - **パッケージマネージャー**: YUM
 - **シェル設定**: oh-my-fish + robbyrussellテーマ、.bashrc経由でFish起動
 - **特有の設定**: HTTPSでのdotfilesクローン、pecoの手動インストール
-- **注意点**: .bashrcの完全上書き、デフォルトシェル変更不可
+- **注意点**: デフォルトシェル変更不可（.bashrcでFish起動）
 
 ## トラブルシューティング
 
@@ -141,9 +145,10 @@ ansible-playbook --syntax-check <playbook>.yml
 ## 開発時の推奨事項
 
 1. **部分実行**: 現在タグは未定義のため、特定タスクのみ実行したい場合はタスクにタグを追加
-2. **冪等性の確認**: 複数回実行しても安全か確認（特にシェルコマンド実行部分）
-3. **エラーハンドリング**: 重要なタスクには`ignore_errors: no`を明示的に設定
+2. **冪等性の確認**: 複数回実行しても安全か確認（userモジュールによるシェル変更など実装済み）
+3. **エラーハンドリング**: dotfiles setup.shなど重要なタスクには適切なエラー処理を実装
 4. **新規ツールの追加**: `roles/<プラットフォーム>/vars/main.yml`に追加してパッケージマネージャー経由でインストール
+5. **Go言語**: 必要に応じて手動インストール（自動化からは除外）
 
 ## 開発・運用
 

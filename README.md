@@ -2,21 +2,59 @@
 
 ## Set up
 
+### Prerequisites
+
+- **Homebrew** (macOS): Required for package management. The playbook will check and provide installation instructions if not found.
+- **Git SSH key** (optional): Required only if using SSH URLs for dotfiles repository
+- **sudo privileges**: Required for system-level changes
+
 ### macOS
 
-1. Install Homebrew
-   https://brew.sh/
-2. `brew install ansible`
+1. Install Homebrew (if not already installed)
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+2. Install Ansible
+   ```bash
+   brew install ansible
+   ```
 3. Clone this repository
 4. `cd dev-pc-provisioning`
 5. `ansible-playbook site.yml --ask-become-pass`
 
 ### Ubuntu
 
-1. `sudo apt install ansible`
+1. Install Ansible
+   ```bash
+   sudo apt update && sudo apt install ansible
+   ```
 2. Clone this repository
 3. `cd dev-pc-provisioning`
 4. `ansible-playbook site.yml --ask-become-pass`
+
+### Cloud Shell
+
+1. Clone this repository
+2. `cd dev-pc-provisioning`
+3. `ansible-playbook cloudshell.yml --ask-become-pass`
+
+## First Run
+
+On first run, you will be prompted for:
+- **Git email address**: Used for Git commits. This will be cached for future runs.
+- **sudo password**: Required for system-level changes (when using `--ask-become-pass`)
+
+## Customization
+
+To use this provisioning for your own setup:
+
+1. Edit `roles/common/defaults/main.yml`:
+   ```yaml
+   git_user_name: "Your Name"
+   github_username: "yourusername"
+   ```
+
+2. If you prefer HTTPS over SSH for Git operations, override the dotfile repository URL in your playbook or vars.
 
 ## Add role
 
