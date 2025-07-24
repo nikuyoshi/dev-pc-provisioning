@@ -33,3 +33,6 @@ git_configurations_base:
   - name: core.editor
     value: vim
     scope: global
+
+# Default git configurations (can be overridden by platform-specific roles)
+git_configurations: "{{ git_configurations_base }}"
