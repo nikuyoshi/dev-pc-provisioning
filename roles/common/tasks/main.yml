@@ -130,19 +130,3 @@
             msg: "Warning: setup.sh not found in {{ dotfile_repo.dest }}"
           when: not setup_script.stat.exists
 
-    - name: Install Starship
-      block:
-        - name: Download Starship
-          get_url: 
-            url: https://starship.rs/install.sh
-            dest: "/tmp/starship-install-{{ ansible_date_time.epoch }}.sh"
-            mode: '0755'
-          register: starship_installer
-          
-        - name: Install Starship
-          shell: sh {{ starship_installer.dest }} -y
-          
-        - name: Delete Starship install script
-          file: 
-            state: absent
-            path: "{{ starship_installer.dest }}"

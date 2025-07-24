@@ -47,6 +47,8 @@ homebrew_packages:
     state: latest
   - name: gh
     state: latest
+  - name: starship
+    state: latest
 
 homebrew_cask_packages:
   - name: 1password-cli

@@ -41,6 +41,13 @@
 - name: Install Jump
   snap: 
     name: jump
+  become: true
+
+- name: Install Starship
+  snap:
+    name: starship
+    classic: yes
+  become: true
 
 
 

@@ -92,7 +92,6 @@ ansible-playbook --syntax-check <playbook>.yml
 2. **開発ディレクトリ**: `~/dev/workspace`と`~/dev/readonly`の作成
 3. **Git基本設定**: user.name、user.email、エディタなどの設定
 4. **Dotfiles管理**: dotfilesリポジトリのクローン、更新、setup.shの実行
-5. **Starshipプロンプト**: 全プラットフォームでのインストール
 
 各プラットフォームロールが実行する機能:
 1. **パッケージインストール**: プラットフォーム固有のツール
@@ -104,18 +103,18 @@ ansible-playbook --syntax-check <playbook>.yml
 ### macOS
 - **パッケージマネージャー**: Homebrew（要事前インストール、チェック機能あり）
 - **シェル設定**: oh-my-zsh → Fish（/opt/homebrew/bin/fish - Apple Silicon前提）
-- **特有の設定**: macOSシステムデフォルト、MacVimインストール、credential.helper設定
+- **特有の設定**: macOSシステムデフォルト、MacVimインストール、credential.helper設定、Starship（Homebrew経由）
 - **注意点**: Intel Macでは/usr/local/bin/fishパスの調整が必要な場合あり
 
 ### Ubuntu
-- **パッケージマネージャー**: APT、Snap（jumpツール用）
+- **パッケージマネージャー**: APT、Snap（jump、Starship用）
 - **シェル設定**: 直接Fishに切り替え（oh-my-fish未使用）
-- **特有の設定**: 開発ツールの豊富なセット、Terraformインストール（HashiCorp公式リポジトリ）、1Password CLI
+- **特有の設定**: 開発ツールの豊富なセット、Terraformインストール（HashiCorp公式リポジトリ）、1Password CLI、Starship（Snap経由）
 
 ### Cloud Shell
 - **パッケージマネージャー**: YUM
 - **シェル設定**: oh-my-fish + robbyrussellテーマ、.bashrc経由でFish起動
-- **特有の設定**: HTTPSでのdotfilesクローン、pecoの手動インストール
+- **特有の設定**: HTTPSでのdotfilesクローン、pecoの手動インストール、Starship（スクリプトインストール）
 - **注意点**: デフォルトシェル変更不可（.bashrcでFish起動）
 
 ## トラブルシューティング

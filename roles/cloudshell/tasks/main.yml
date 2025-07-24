@@ -49,6 +49,32 @@
     executable: /usr/bin/fish
 
 
+- name: Install Starship
+  block:
+    - name: Check if Starship is installed
+      command: which starship
+      register: starship_check
+      failed_when: false
+      changed_when: false
+
+    - name: Download Starship
+      get_url: 
+        url: https://starship.rs/install.sh
+        dest: "/tmp/starship-install-{{ ansible_date_time.epoch }}.sh"
+        mode: '0755'
+      register: starship_installer
+      when: starship_check.rc != 0
+      
+    - name: Install Starship
+      shell: sh {{ starship_installer.dest }} -y
+      when: starship_check.rc != 0
+      
+    - name: Delete Starship install script
+      file: 
+        state: absent
+        path: "{{ starship_installer.dest }}"
+      when: starship_installer is changed
+
 - name: Add Fish shell to .bashrc
   blockinfile:
     path: "{{ ansible_env.HOME }}/.bashrc"
