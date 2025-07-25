@@ -53,6 +53,8 @@ homebrew_packages:
 homebrew_cask_packages:
   - name: 1password-cli
     state: latest
+  - name: session-manager-plugin
+    state: latest
 
 homebrew_tap_packages:
   - name: aws/tap

@@ -49,6 +49,36 @@
     executable: /usr/bin/fish
 
 
+- name: Install AWS Session Manager Plugin
+  block:
+    - name: Check if Session Manager Plugin is installed
+      command: which session-manager-plugin
+      register: ssm_plugin_check
+      failed_when: false
+      changed_when: false
+
+    - name: Download Session Manager Plugin
+      get_url:
+        url: "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm"
+        dest: /tmp/session-manager-plugin.rpm
+        mode: '0644'
+      when: ssm_plugin_check.rc != 0
+      become: true
+
+    - name: Install Session Manager Plugin
+      yum:
+        name: /tmp/session-manager-plugin.rpm
+        state: present
+      when: ssm_plugin_check.rc != 0
+      become: true
+
+    - name: Clean up Session Manager Plugin installer
+      file:
+        path: /tmp/session-manager-plugin.rpm
+        state: absent
+      when: ssm_plugin_check.rc != 0
+      become: true
+
 - name: Install Starship
   block:
     - name: Check if Starship is installed

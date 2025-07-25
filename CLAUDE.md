@@ -12,6 +12,7 @@
 
 ### 既知の問題
 - **Cloud Shell dotfiles**: HTTPS URLの重複定義（varsで適切にオーバーライド済み）
+- **macOSシェル設定**: /etc/shellsへのfish追加とデフォルトシェル変更時のハング（条件付き実行で解決済み）
 
 ## 前提条件
 
@@ -103,18 +104,18 @@ ansible-playbook --syntax-check <playbook>.yml
 ### macOS
 - **パッケージマネージャー**: Homebrew（要事前インストール、チェック機能あり）
 - **シェル設定**: oh-my-zsh → Fish（/opt/homebrew/bin/fish - Apple Silicon前提）
-- **特有の設定**: macOSシステムデフォルト、MacVimインストール、credential.helper設定、Starship（Homebrew経由）
+- **特有の設定**: macOSシステムデフォルト、MacVimインストール、credential.helper設定、Starship（Homebrew経由）、AWS Session Manager Plugin（Homebrew Cask経由）
 - **注意点**: Intel Macでは/usr/local/bin/fishパスの調整が必要な場合あり
 
 ### Ubuntu
 - **パッケージマネージャー**: APT、Snap（jump、Starship用）
 - **シェル設定**: 直接Fishに切り替え（oh-my-fish未使用）
-- **特有の設定**: 開発ツールの豊富なセット、Terraformインストール（HashiCorp公式リポジトリ）、1Password CLI、Starship（Snap経由）
+- **特有の設定**: 開発ツールの豊富なセット、Terraformインストール（HashiCorp公式リポジトリ）、1Password CLI、Starship（Snap経由）、AWS Session Manager Plugin（公式.debパッケージ）
 
 ### Cloud Shell
 - **パッケージマネージャー**: YUM
 - **シェル設定**: oh-my-fish + robbyrussellテーマ、.bashrc経由でFish起動
-- **特有の設定**: HTTPSでのdotfilesクローン、pecoの手動インストール、Starship（スクリプトインストール）
+- **特有の設定**: HTTPSでのdotfilesクローン、pecoの手動インストール、Starship（スクリプトインストール）、AWS Session Manager Plugin（公式.rpmパッケージ）
 - **注意点**: デフォルトシェル変更不可（.bashrcでFish起動）
 
 ## トラブルシューティング

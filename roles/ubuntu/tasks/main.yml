@@ -49,8 +49,26 @@
     classic: yes
   become: true
 
+- name: Install AWS Session Manager Plugin
+  block:
+    - name: Download Session Manager Plugin
+      get_url:
+        url: "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb"
+        dest: /tmp/session-manager-plugin.deb
+        mode: '0644'
+      become: true
 
+    - name: Install Session Manager Plugin
+      apt:
+        deb: /tmp/session-manager-plugin.deb
+        state: present
+      become: true
 
+    - name: Clean up Session Manager Plugin installer
+      file:
+        path: /tmp/session-manager-plugin.deb
+        state: absent
+      become: true
 
 - name: Change default shell
   become: yes
